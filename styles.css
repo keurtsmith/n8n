@@ -709,11 +709,42 @@
     margin-bottom: 0.5rem;
     text-align: center;
   }
+
+  /* Make the auth form a positioning context */
+  .auth-form {
+    position: relative;
+  }
   
   .auth-form p {
     color: #888;
     text-align: center;
     margin-bottom: 2rem;
+  }
+
+  /* Subtle back link positioned inside the form without taking space */
+  .auth-back {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    margin: 0;
+    padding: 0;
+  }
+  .auth-back a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #9aa0a6;
+    font-size: 0.9rem;
+    padding: 6px 8px;
+    border-radius: 6px;
+    text-decoration: none;
+    background: transparent;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+  .auth-back a:hover {
+    color: #58b24f;
+    background: rgba(88, 178, 79, 0.08);
+    text-decoration: none;
   }
   
   .form-group {
@@ -743,7 +774,42 @@
     border-color: #58b24f;
     box-shadow: 0 0 0 2px rgba(88, 178, 79, 0.2);
   }
-  
+
+  /* Password input with inline eye icon */
+  .password-input-wrapper {
+    position: relative;
+  }
+  .password-input-wrapper input {
+    padding-right: 40px;
+  }
+  .toggle-password-btn {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+  .toggle-password-btn:hover {
+    color: #58b24f;
+    background: rgba(88, 178, 79, 0.08);
+  }
+  .toggle-password-btn[aria-pressed="true"] svg {
+    color: #58b24f;
+  }
+  .password-input-wrapper input:focus + .toggle-password-btn {
+    box-shadow: none;
+  }
+
   .auth-btn {
     width: 100%;
     padding: 0.75rem 1rem;
@@ -759,6 +825,28 @@
   .auth-btn.primary {
     background: linear-gradient(135deg, #0b7abb, #58b24f);
     color: white;
+  }
+
+  .auth-btn.small {
+    padding: 0.55rem 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  .auth-btn.secondary {
+    background: #2a2a2a;
+    color: #ccc;
+    border: 1px solid #3a3a3a;
+  }
+  .auth-btn.secondary:hover {
+    background: #3a3a3a;
+    color: #fff;
+  }
+
+  .auth-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
   }
   
   .auth-btn.primary:hover {

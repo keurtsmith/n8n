@@ -462,6 +462,24 @@ function stopGeneration() {
 }
 
 // Authentication functions
+function togglePassword(inputId, show) {
+  const input = document.getElementById(inputId)
+  if (!input) return
+
+  if (typeof show === "boolean") {
+    input.type = show ? "text" : "password"
+  } else {
+    input.type = input.type === "password" ? "text" : "password"
+  }
+
+  const btn = input.parentElement && input.parentElement.querySelector && input.parentElement.querySelector('.toggle-password-btn')
+  if (btn) {
+    const isVisible = input.type === 'text'
+    btn.setAttribute('aria-pressed', String(isVisible))
+    btn.title = isVisible ? 'Masquer le mot de passe' : 'Afficher le mot de passe'
+  }
+}
+
 function showAuthOverlay() {
   document.getElementById("authOverlay").style.display = "flex"
 }
@@ -473,6 +491,10 @@ function hideAuthOverlay() {
 function showLoginForm() {
   document.getElementById("loginForm").classList.remove("hidden")
   document.getElementById("registerForm").classList.add("hidden")
+  const emailInput = document.getElementById("loginEmail")
+  const pwdInput = document.getElementById("loginPassword")
+  if (emailInput && !emailInput.value) emailInput.value = "epharma@241"
+  if (pwdInput && !pwdInput.value) pwdInput.value = "password"
 }
 
 function showRegisterForm() {
@@ -591,10 +613,25 @@ function loadUserConversations() {
 }
 
 // Initialisation
+function seedDefaultUser() {
+  const users = JSON.parse(localStorage.getItem("epharma_users") || "{}")
+  const key = "epharma@241"
+  if (!users[key]) {
+    users[key] = {
+      id: Date.now().toString(),
+      name: "Epharma",
+      email: key,
+      password: "password",
+      createdAt: new Date().toISOString(),
+    }
+    localStorage.setItem("epharma_users", JSON.stringify(users))
+  }
+}
+
 window.addEventListener("load", () => {
+  seedDefaultUser()
   loadConversations()
 
-  // Only proceed if user is authenticated
   if (currentUser) {
     if (Object.keys(conversations).length === 0) {
       createNewChat()

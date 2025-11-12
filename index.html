@@ -22,12 +22,20 @@
                 
                 <form onsubmit="handleLogin(event)">
                     <div class="form-group">
-                        <label for="loginEmail">Email</label>
-                        <input type="email" id="loginEmail" required>
+                        <label for="loginEmail">Nom d'utilisateur</label>
+                        <input type="text" id="loginEmail" required>
                     </div>
                     <div class="form-group">
                         <label for="loginPassword">Mot de passe</label>
-                        <input type="password" id="loginPassword" required>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="loginPassword" required>
+                            <button type="button" class="toggle-password-btn" onclick="togglePassword('loginPassword')" aria-label="Afficher/Masquer le mot de passe" title="Afficher/Masquer le mot de passe">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                     <button type="submit" class="auth-btn primary">Se connecter</button>
                 </form>
@@ -53,13 +61,32 @@
                     </div>
                     <div class="form-group">
                         <label for="registerPassword">Mot de passe</label>
-                        <input type="password" id="registerPassword" required minlength="6">
+                        <div class="password-input-wrapper">
+                            <input type="password" id="registerPassword" required minlength="6">
+                            <button type="button" class="toggle-password-btn" onclick="togglePassword('registerPassword')" aria-label="Afficher/Masquer le mot de passe" title="Afficher/Masquer le mot de passe">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="confirmPassword">Confirmer le mot de passe</label>
-                        <input type="password" id="confirmPassword" required minlength="6">
+                        <div class="password-input-wrapper">
+                            <input type="password" id="confirmPassword" required minlength="6">
+                            <button type="button" class="toggle-password-btn" onclick="togglePassword('confirmPassword')" aria-label="Afficher/Masquer le mot de passe" title="Afficher/Masquer le mot de passe">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
-                    <button type="submit" class="auth-btn primary">S'inscrire</button>
+                    <div class="auth-actions">
+                        <button type="button" class="auth-btn primary small" onclick="showLoginForm()">Retour à l'accueil</button>
+                        <button type="submit" class="auth-btn primary small">S'inscrire</button>
+                    </div>
                 </form>
                 
                 <p class="auth-switch">
