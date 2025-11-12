@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epharma IA Assistant</title>
+   <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="auth-overlay" id="authOverlay">
+        <div class="auth-container">
+            <div class="auth-header">
+                <div class="logo">
+                    <div class="logo-icon">E</div>
+                    <div class="logo-text">Epharma IA</div>
+                </div>
+            </div>
+            
+            <div class="auth-form" id="loginForm">
+                <h2>Connexion</h2>
+                <p>Connectez-vous pour retrouver vos conversations</p>
+                
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Mot de passe</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="auth-btn primary">Se connecter</button>
+                </form>
+                
+                <p class="auth-switch">
+                    Pas encore de compte ? 
+                    <a href="#" onclick="showRegisterForm()">S'inscrire</a>
+                </p>
+            </div>
+            
+            <div class="auth-form hidden" id="registerForm">
+                <h2>Inscription</h2>
+                <p>Créez votre compte pour sauvegarder vos conversations</p>
+                
+                <form onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="registerName">Nom complet</label>
+                        <input type="text" id="registerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Mot de passe</label>
+                        <input type="password" id="registerPassword" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirmer le mot de passe</label>
+                        <input type="password" id="confirmPassword" required minlength="6">
+                    </div>
+                    <button type="submit" class="auth-btn primary">S'inscrire</button>
+                </form>
+                
+                <p class="auth-switch">
+                    Déjà un compte ? 
+                    <a href="#" onclick="showLoginForm()">Se connecter</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+    
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <button class="new-chat-btn" onclick="createNewChat()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem;">
+                    <path d="M12 5v14M5 12h14"/>
+                </svg>
+                Nouvelle discussion
+            </button>
+            <button class="sidebar-toggle" onclick="toggleSidebar()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="conversations-list scrollbar" id="conversationsList">
+             Les conversations seront ajoutées ici dynamiquement 
+        </div>
+
+        <div class="user-profile" id="userProfile">
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">U</div>
+                <div class="user-details">
+                    <div class="user-name" id="userName">Utilisateur</div>
+                    <div class="user-email" id="userEmail">user@example.com</div>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()" title="Se déconnecter">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16,17 21,12 16,7"/>
+                    <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div class="header-left">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12h18M3 6h18M3 18h18"/>
+                    </svg>
+                </button>
+                <div class="logo">
+                    <div class="logo-icon">E</div>
+                    <div class="logo-text">Epharma IA</div>
+                </div>
+            </div>
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span>Assistant en ligne</span>
+            </div>
+        </div>
+
+        <div class="chat-container">
+            <div class="messages-area scrollbar" id="messagesArea">
+                <div class="welcome-message">
+                    <h1 class="welcome-title">Bienvenue sur Epharma IA</h1>
+                    <p class="welcome-subtitle">Votre assistant intelligent pour tous vos besoins pharmaceutiques</p>
+                    <div class="quick-actions">
+                        <div class="quick-action" onclick="sendQuickMessage('Aide-moi avec les médicaments')">
+                            Médicaments
+                        </div>
+                        <div class="quick-action" onclick="sendQuickMessage('Informations sur les interactions')">
+                            Interactions
+                        </div>
+                        <div class="quick-action" onclick="sendQuickMessage('Conseils pharmaceutiques')">
+                            Conseils
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                <span>L'assistant Epharma écrit</span>
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+
+            <div class="input-area">
+                <div class="input-container">
+                    <textarea 
+                        class="message-input" 
+                        id="messageInput" 
+                        placeholder="Posez votre question à l'assistant Epharma..."
+                        rows="1"
+                    ></textarea>
+                    <button class="send-button" id="sendButton" onclick="sendMessage()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="m22 2-7 20-4-9-9-4 20-7z"/>
+                        </svg>
+                    </button>
+                    <button class="stop-button" id="stopButton" onclick="stopGeneration()" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="6" y="6" width="12" height="12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="script.js"></script>
+
+</body>
+</html>

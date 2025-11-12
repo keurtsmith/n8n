@@ -1,0 +1,872 @@
+{
+  "name": "Agent_supervisor",
+  "nodes": [
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Remplacer du texte (find/replace) dans Google Slides.",
+        "operation": "replaceText",
+        "presentationId": "={{ $fromAI('presentationId','1RY1OJWouhVDVxvvQOmCx6SYZRFcMrZvupEypZP0k-5Q','string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSlidesTool",
+      "typeVersion": 2,
+      "position": [
+        -540,
+        520
+      ],
+      "id": "3ed4f801-a511-4d0c-a787-039e484872fa",
+      "name": "Update_Flash_Report",
+      "credentials": {
+        "googleSlidesOAuth2Api": {
+          "id": "3lRWJmQUEjSJYCTc",
+          "name": "Google Slides account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Lire les slides d'une présentation Google Slides.",
+        "operation": "getSlides",
+        "presentationId": "={{ $fromAI('presentationId','1RY1OJWouhVDVxvvQOmCx6SYZRFcMrZvupEypZP0k-5Q','string') }}"
+      },
+      "type": "n8n-nodes-base.googleSlidesTool",
+      "typeVersion": 2,
+      "position": [
+        -360,
+        520
+      ],
+      "id": "02adf248-fd7d-4467-99ce-80ec236928c4",
+      "name": "Read_Flash_Report",
+      "credentials": {
+        "googleSlidesOAuth2Api": {
+          "id": "3lRWJmQUEjSJYCTc",
+          "name": "Google Slides account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Supprimer une ligne via row_number. Utiliser seulement après confirmation explicite de l'utilisateur.",
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "1-P8iT1CyYR0FmQRLDGnLZTK75ubdhGVXpEyQUAndM5A",
+          "mode": "list",
+          "cachedResultName": "base de données des pharmacies",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-P8iT1CyYR0FmQRLDGnLZTK75ubdhGVXpEyQUAndM5A/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1978956918,
+          "mode": "list",
+          "cachedResultName": "Feuil1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-P8iT1CyYR0FmQRLDGnLZTK75ubdhGVXpEyQUAndM5A/edit#gid=1978956918"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $fromAI('row_number', '', 'string') }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": true,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        -80,
+        440
+      ],
+      "id": "08414858-a007-4684-a74c-c4648e750e48",
+      "name": "Delete_Pharmacy_Data",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "dG8HLVEfY0YHOcop",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Mettre à jour une ligne existante via row_number. Envoie UNIQUEMENT le row_number et les champs à modifier (pas tous les champs).",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1-P8iT1CyYR0FmQRLDGnLZTK75ubdhGVXpEyQUAndM5A",
+          "mode": "list",
+          "cachedResultName": "base de données des pharmacies",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-P8iT1CyYR0FmQRLDGnLZTK75ubdhGVXpEyQUAndM5A/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1978956918,
+          "mode": "list",
+          "cachedResultName": "Feuil1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-P8iT1CyYR0FmQRLDGnLZTK75ubdhGVXpEyQUAndM5A/edit#gid=1978956918"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $fromAI('row_number', '', 'string') }}",
+            "Nom_Pharmacie": "={{ $fromAI('Nom_Pharmacie', '', 'string') }}",
+            "Type_de_client": "={{ $fromAI('Type_de_client', '', 'string') }}",
+            "Pays": "={{ $fromAI('Pays', '', 'string') }}",
+            "Ville": "={{ $fromAI('Ville', '', 'string') }}",
+            "Quartier": "={{ $fromAI('Quartier', '', 'string') }}",
+            "Proprietaire": "={{ $fromAI('Proprietaire', '', 'string') }}",
+            "Version_du_logiciel": "={{ $fromAI('Version_du_logiciel', '', 'string') }}",
+            "Lien_distant": "={{ $fromAI('Lien_distant', '', 'string') }}",
+            "Anydesk_principal": "={{ $fromAI('Anydesk_principal', '', 'string') }}",
+            "Anydesk secondaire 1": "={{ $fromAI('Anydesk_secondaire_1', '', 'string') }}",
+            "Anydesk secondaire 2": "={{ $fromAI('Anydesk_secondaire_2', '', 'string') }}",
+            "Sauvegarde": "={{ $fromAI('Sauvegarde', '', 'string') }}",
+            "Nom_du_client": "={{ $fromAI('Nom_du_client', '', 'string') }}",
+            "Contact": "={{ $fromAI('Contact', '', 'string') }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": true,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Nom_Pharmacie",
+              "displayName": "Nom_Pharmacie",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nom_du_client",
+              "displayName": "Nom_du_client",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Contact",
+              "displayName": "Contact",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Type_de_client",
+              "displayName": "Type_de_client",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Pays",
+              "displayName": "Pays",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ville",
+              "displayName": "Ville",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Quartier",
+              "displayName": "Quartier",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Proprietaire",
+              "displayName": "Proprietaire",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Version_du_logiciel",
+              "displayName": "Version_du_logiciel",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Lien_distant",
+              "displayName": "Lien_distant",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Anydesk_principal",
+              "displayName": "Anydesk_principal",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Anydesk secondaire 1",
+              "displayName": "Anydesk secondaire 1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Anydesk secondaire 2",
+              "displayName": "Anydesk secondaire 2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Sauvegarde",
+              "displayName": "Sauvegarde",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        120,
+        440
+      ],
+      "id": "856ab6e5-2cd1-4f3b-9b68-1104e33b0b98",
+      "name": "Update_Pharmacy_Data",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "dG8HLVEfY0YHOcop",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Ajouter une nouvelle ligne (pharmacie) dans Google Sheets. Vérifie d'abord qu'elle n'existe pas déjà.",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1-P8iT1CyYR0FmQRLDGnLZTK75ubdhGVXpEyQUAndM5A",
+          "mode": "list",
+          "cachedResultName": "base de données des pharmacies",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-P8iT1CyYR0FmQRLDGnLZTK75ubdhGVXpEyQUAndM5A/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1978956918,
+          "mode": "list",
+          "cachedResultName": "Feuil1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-P8iT1CyYR0FmQRLDGnLZTK75ubdhGVXpEyQUAndM5A/edit#gid=1978956918"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nom_Pharmacie": "={{ $fromAI('Nom_Pharmacie', '', 'string') }}",
+            "Type_de_client": "={{ $fromAI('Type_de_client', '', 'string') }}",
+            "Pays": "={{ $fromAI('Pays', '', 'string') }}",
+            "Ville": "={{ $fromAI('Ville', '', 'string') }}",
+            "Quartier": "={{ $fromAI('Quartier', '', 'string') }}",
+            "Proprietaire": "={{ $fromAI('Proprietaire', '', 'string') }}",
+            "Version_du_logiciel": "={{ $fromAI('Version_du_logiciel', '', 'string') }}",
+            "Lien_distant": "={{ $fromAI('Lien_distant', '', 'string') }}",
+            "Anydesk_principal": "={{ $fromAI('Anydesk_principal', '', 'string') }}",
+            "Anydesk secondaire 1": "={{ $fromAI('Anydesk_secondaire_1', '', 'string') }}",
+            "Anydesk secondaire 2": "={{ $fromAI('Anydesk_secondaire_2', '', 'string') }}",
+            "Sauvegarde": "={{ $fromAI('Sauvegarde', '', 'string') }}",
+            "Nom_du_client": "={{ $fromAI('Nom_du_client', '', 'string') }}",
+            "Contact": "={{ $fromAI('Contact', '', 'string') }}"
+          },
+          "schema": [
+            {
+              "id": "Nom_Pharmacie",
+              "displayName": "Nom_Pharmacie",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nom_du_client",
+              "displayName": "Nom_du_client",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Contact",
+              "displayName": "Contact",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Type_de_client",
+              "displayName": "Type_de_client",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Pays",
+              "displayName": "Pays",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ville",
+              "displayName": "Ville",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Quartier",
+              "displayName": "Quartier",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Proprietaire",
+              "displayName": "Proprietaire",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Version_du_logiciel",
+              "displayName": "Version_du_logiciel",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Lien_distant",
+              "displayName": "Lien_distant",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Anydesk_principal",
+              "displayName": "Anydesk_principal",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Anydesk secondaire 1",
+              "displayName": "Anydesk secondaire 1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Anydesk secondaire 2",
+              "displayName": "Anydesk secondaire 2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Sauvegarde",
+              "displayName": "Sauvegarde",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        320,
+        440
+      ],
+      "id": "01629bee-6573-4184-ba58-7927f23ac173",
+      "name": "Add_Pharmacy_Data",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "dG8HLVEfY0YHOcop",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Lire toutes les lignes de la feuille Google Sheets (base de pharmacies). Retourne toutes les données incluant le row_number.",
+        "documentId": {
+          "__rl": true,
+          "value": "1-P8iT1CyYR0FmQRLDGnLZTK75ubdhGVXpEyQUAndM5A",
+          "mode": "list",
+          "cachedResultName": "base de données des pharmacies",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-P8iT1CyYR0FmQRLDGnLZTK75ubdhGVXpEyQUAndM5A/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1978956918,
+          "mode": "list",
+          "cachedResultName": "Feuil1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-P8iT1CyYR0FmQRLDGnLZTK75ubdhGVXpEyQUAndM5A/edit#gid=1978956918"
+        },
+        "combineFilters": "OR",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        520,
+        440
+      ],
+      "id": "13247507-c260-46c1-ad3a-eb45fcf22313",
+      "name": "Read_Pharmacy_Data",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "dG8HLVEfY0YHOcop",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4o-mini",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        220
+      ],
+      "id": "7ec65814-4ffc-45be-a1be-9b80f92841ee",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "5ce6Gm5bhojbjH1M",
+          "name": "OpenRouter account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.3,
+      "position": [
+        1300,
+        100
+      ],
+      "id": "6b9fc8aa-437d-4047-862e-7e21923331e0",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Tu es un agent IA professionnel pour gérer la base de données des pharmacies dans Google Sheets.\n\n═══════════════════════════════════════════════════════════════\n🔹 WORKFLOW OBLIGATOIRE POUR CHAQUE OPÉRATION\n═══════════════════════════════════════════════════════════════\n\n📖 ÉTAPE 1 : TOUJOURS LIRE D'ABORD\n   → Appelle Read_Pharmacy_Data AVANT toute modification/suppression\n   → Cherche la correspondance EXACTE sur Nom_Pharmacie (respecte casse et espaces)\n   → Récupère le champ row_number de la ligne trouvée\n\n✅ ÉTAPE 2 : VÉRIFIER L'UNICITÉ\n   → 0 résultat : \"Aucune pharmacie trouvée avec ce nom\" → STOP\n   → 2+ résultats : \"Plusieurs pharmacies trouvées avec ce nom\" → STOP\n   → 1 résultat : Continue avec le row_number trouvé\n\n═══════════════════════════════════════════════════════════════\n🔹 OPÉRATIONS DISPONIBLES\n═══════════════════════════════════════════════════════════════\n\n🆕 AJOUT (Add_Pharmacy_Data)\n   1. Lis toutes les données avec Read_Pharmacy_Data\n   2. Vérifie qu'aucune ligne n'a le même Nom_Pharmacie (exact)\n   3. Si existe déjà → \"Cette pharmacie existe déjà\" → STOP\n   4. Si nouvelle → Appelle Add_Pharmacy_Data avec TOUS les champs fournis\n\n✏️ MODIFICATION (Update_Pharmacy_Data)\n   1. Lis avec Read_Pharmacy_Data\n   2. Trouve LA ligne avec Nom_Pharmacie exact\n   3. Récupère son row_number\n   4. Appelle Update_Pharmacy_Data avec :\n      • row_number : [valeur récupérée]\n      • UNIQUEMENT les champs à modifier (pas les autres !)\n   \n   ⚠️ RÈGLE CRITIQUE : N'envoie QUE les champs qui changent + row_number\n   \n   ✅ EXEMPLE CORRECT (modifier seulement le Contact) :\n   Paramètres à envoyer :\n   - row_number: \"5\"\n   - Contact: \"0600000000\"\n   (Ne pas envoyer Nom_Pharmacie, Ville, etc. s'ils ne changent pas)\n   \n   ✅ EXEMPLE CORRECT (renommer une pharmacie) :\n   Paramètres à envoyer :\n   - row_number: \"3\"\n   - Nom_Pharmacie: \"Nouveau Nom\"\n   (Ne pas envoyer les autres champs)\n\n🗑️ SUPPRESSION (Delete_Pharmacy_Data)\n   1. L'utilisateur doit d'abord confirmer avec \"CONFIRMER [Nom exact]\"\n   2. Si pas de confirmation → Demande : \"Pour confirmer, écrivez : CONFIRMER [Nom_Pharmacie]\"\n   3. Si confirmé :\n      a. Lis avec Read_Pharmacy_Data\n      b. Trouve LA ligne avec Nom_Pharmacie exact\n      c. Récupère son row_number\n      d. Appelle Delete_Pharmacy_Data avec UNIQUEMENT row_number\n\n═══════════════════════════════════════════════════════════════\n🔹 EXEMPLES CONCRETS DÉTAILLÉS\n═══════════════════════════════════════════════════════════════\n\n📝 EXEMPLE 1 : Modifier le contact\nUser : \"Modifie le contact de Pharmacie Centrale en 0600000000\"\n\nÉtapes :\n1. Appelle Read_Pharmacy_Data\n2. Filtre localement → trouve \"Pharmacie Centrale\" avec row_number = \"5\"\n3. Appelle Update_Pharmacy_Data avec UNIQUEMENT :\n   {\n     \"row_number\": \"5\",\n     \"Contact\": \"0600000000\"\n   }\n   (NE PAS envoyer Nom_Pharmacie, Ville, Pays, etc.)\n\nRéponse : \"✅ Contact de Pharmacie Centrale modifié : 0600000000\"\n\n📝 EXEMPLE 2 : Renommer une pharmacie\nUser : \"Modifie le nom de la pharmacie Saint Jean en Sainte Jeanne\"\n\nÉtapes :\n1. Appelle Read_Pharmacy_Data\n2. Filtre localement → trouve \"Saint Jean\" avec row_number = \"3\"\n3. Appelle Update_Pharmacy_Data avec UNIQUEMENT :\n   {\n     \"row_number\": \"3\",\n     \"Nom_Pharmacie\": \"Sainte Jeanne\"\n   }\n   (NE PAS envoyer les autres champs)\n\nRéponse : \"✅ Pharmacie renommée : Saint Jean → Sainte Jeanne\"\n\n📝 EXEMPLE 3 : Modifier plusieurs champs\nUser : \"Modifie le contact et la ville de Pharmacie Moderne\"\n\nÉtapes :\n1. Appelle Read_Pharmacy_Data\n2. Trouve \"Pharmacie Moderne\" avec row_number = \"8\"\n3. Appelle Update_Pharmacy_Data avec UNIQUEMENT :\n   {\n     \"row_number\": \"8\",\n     \"Contact\": \"[nouveau contact]\",\n     \"Ville\": \"[nouvelle ville]\"\n   }\n   (NE PAS envoyer les autres 12 champs)\n\n📝 EXEMPLE 4 : Suppression avec confirmation\nUser : \"Supprime Pharmacie du Soleil\"\nRéponse : \"⚠️ Pour confirmer la suppression, écrivez : CONFIRMER Pharmacie du Soleil\"\n\nUser : \"CONFIRMER Pharmacie du Soleil\"\nÉtapes :\n1. Appelle Read_Pharmacy_Data\n2. Trouve \"Pharmacie du Soleil\" avec row_number = \"7\"\n3. Appelle Delete_Pharmacy_Data avec :\n   {\n     \"row_number\": \"7\"\n   }\n\nRéponse : \"✅ Pharmacie du Soleil supprimée avec succès\"\n\n═══════════════════════════════════════════════════════════════\n🔹 FORMAT DE RÉPONSE\n═══════════════════════════════════════════════════════════════\n\nRéponds de manière concise et structurée :\n✅ Opération effectuée\n📊 Données modifiées/ajoutées/supprimées\n🔢 Ligne concernée (row_number si pertinent)\n\n═══════════════════════════════════════════════════════════════\n\nQuestion de l'utilisateur : {{ $json.body.chatInput }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        360,
+        100
+      ],
+      "id": "e64d04ad-35cf-477e-9ea5-e3718ad72861",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "c1630bc2-7417-411e-9b8a-937ea034bb82",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -440,
+        100
+      ],
+      "id": "31986b24-57a1-4aa6-82f4-7868b389463b",
+      "name": "Webhook",
+      "webhookId": "d5089c66-2fa1-4f71-a2af-92a414afab33"
+    },
+    {
+      "parameters": {
+        "resource": "page",
+        "operation": "__CUSTOM_API_CALL__"
+      },
+      "type": "n8n-nodes-base.googleSlidesTool",
+      "typeVersion": 2,
+      "position": [
+        720,
+        400
+      ],
+      "id": "323ef3c4-3887-443a-885b-efc1d99e49d5",
+      "name": "Add_Slide_Flash_Report",
+      "credentials": {
+        "googleSlidesOAuth2Api": {
+          "id": "3lRWJmQUEjSJYCTc",
+          "name": "Google Slides account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Get slides from a presentation in Google Slides",
+        "operation": "getSlides",
+        "presentationId": "1TBop8ZJSfdsM1EVo32GhmlnB_8066E_81kWJIu1Ln4E"
+      },
+      "type": "n8n-nodes-base.googleSlidesTool",
+      "typeVersion": 2,
+      "position": [
+        940,
+        460
+      ],
+      "id": "f0875777-6045-4491-a77c-eeafb32b28a0",
+      "name": "Mise_a_jour_du_logiciel",
+      "credentials": {
+        "googleSlidesOAuth2Api": {
+          "id": "3lRWJmQUEjSJYCTc",
+          "name": "Google Slides account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Get slides from a presentation in Google Slides",
+        "operation": "getSlides",
+        "presentationId": "1cnJI6bqtMaBCc-1Q20txaoHXRXYxiN5LIepsTw6lLF8"
+      },
+      "type": "n8n-nodes-base.googleSlidesTool",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        480
+      ],
+      "id": "132c635e-6484-4fb9-988f-57d8fb2b4f97",
+      "name": "Procedure_installation_logiciel",
+      "credentials": {
+        "googleSlidesOAuth2Api": {
+          "id": "3lRWJmQUEjSJYCTc",
+          "name": "Google Slides account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "1Ekt2Aiw7sh3T2jICeoZ-URq7vCPEbBmHHvQ10_FCGV4"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        1220,
+        320
+      ],
+      "id": "3febf491-3a95-4bb9-8279-ea4101161569",
+      "name": "Guide d'utilisation de TocToc Medoc",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "4SW39wW0S6z17GEQ",
+          "name": "Google Docs account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "15Ysg0bDm3nsw6g7oXFSXdhPQJcT1psvSzQl-QL5Tihs"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        1400,
+        280
+      ],
+      "id": "55563228-9c80-4e31-a371-ef0bdacd9f8e",
+      "name": "Procedure de sauvegarde automatique",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "4SW39wW0S6z17GEQ",
+          "name": "Google Docs account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Update_Flash_Report": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read_Flash_Report": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete_Pharmacy_Data": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update_Pharmacy_Data": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add_Pharmacy_Data": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read_Pharmacy_Data": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add_Slide_Flash_Report": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mise_a_jour_du_logiciel": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procedure_installation_logiciel": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guide d'utilisation de TocToc Medoc": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procedure de sauvegarde automatique": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "344b9663-4612-44b0-98ae-e53a1478dc98",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "89f1325b19f5b2bb71e8f85edaa9a8e1f156d50a991477d7ed4940c06095672f"
+  },
+  "id": "8LtvDtY1jrkjTMh3",
+  "tags": []
+}

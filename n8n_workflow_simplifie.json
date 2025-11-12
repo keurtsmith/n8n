@@ -1,0 +1,390 @@
+{
+  "name": "Agent_supervisor_simplifie",
+  "nodes": [
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Lire toutes les lignes de la feuille Google Sheets (base de pharmacies). Retourne toutes les données incluant le row_number.",
+        "documentId": {
+          "__rl": true,
+          "value": "1-P8iT1CyYR0FmQRLDGnLZTK75ubdhGVXpEyQUAndM5A",
+          "mode": "list",
+          "cachedResultName": "base de données des pharmacies",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-P8iT1CyYR0FmQRLDGnLZTK75ubdhGVXpEyQUAndM5A/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1978956918,
+          "mode": "list",
+          "cachedResultName": "Feuil1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-P8iT1CyYR0FmQRLDGnLZTK75ubdhGVXpEyQUAndM5A/edit#gid=1978956918"
+        },
+        "combineFilters": "OR",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        520,
+        440
+      ],
+      "id": "13247507-c260-46c1-ad3a-eb45fcf22313",
+      "name": "Read_Pharmacy_Data",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "dG8HLVEfY0YHOcop",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Remplacer du texte (find/replace) dans Google Slides.",
+        "operation": "replaceText",
+        "presentationId": "={{ $fromAI('presentationId','1RY1OJWouhVDVxvvQOmCx6SYZRFcMrZvupEypZP0k-5Q','string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSlidesTool",
+      "typeVersion": 2,
+      "position": [
+        -540,
+        520
+      ],
+      "id": "3ed4f801-a511-4d0c-a787-039e484872fa",
+      "name": "Update_Flash_Report",
+      "credentials": {
+        "googleSlidesOAuth2Api": {
+          "id": "3lRWJmQUEjSJYCTc",
+          "name": "Google Slides account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Lire les slides d'une présentation Google Slides.",
+        "operation": "getSlides",
+        "presentationId": "={{ $fromAI('presentationId','1RY1OJWouhVDVxvvQOmCx6SYZRFcMrZvupEypZP0k-5Q','string') }}"
+      },
+      "type": "n8n-nodes-base.googleSlidesTool",
+      "typeVersion": 2,
+      "position": [
+        -360,
+        520
+      ],
+      "id": "02adf248-fd7d-4467-99ce-80ec236928c4",
+      "name": "Read_Flash_Report",
+      "credentials": {
+        "googleSlidesOAuth2Api": {
+          "id": "3lRWJmQUEjSJYCTc",
+          "name": "Google Slides account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4o-mini",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        220
+      ],
+      "id": "7ec65814-4ffc-45be-a1be-9b80f92841ee",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "5ce6Gm5bhojbjH1M",
+          "name": "OpenRouter account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.3,
+      "position": [
+        1300,
+        100
+      ],
+      "id": "6b9fc8aa-437d-4047-862e-7e21923331e0",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Tu es un assistant IA professionnel pour Epharma.\n\n🔹 FONCTIONNALITÉS DISPONIBLES :\n\n1. **Lecture de la base de données des pharmacies**\n   - Utilise l'outil Read_Pharmacy_Data pour lire toutes les pharmacies\n   - Affiche les informations demandées de manière claire et structurée\n\n2. **Consultation de documents**\n   - Accès aux guides, procédures et documentations\n   - Réponses sur l'utilisation du logiciel TocToc Medoc\n\n3. **Gestion Google Slides**\n   - Lecture et mise à jour des présentations Flash Report\n\n⚠️ **IMPORTANT** : \nPour les opérations d'AJOUT, MODIFICATION ou SUPPRESSION de pharmacies, informe l'utilisateur que ces fonctionnalités sont gérées directement dans l'interface de chat et ne nécessitent pas ton intervention.\n\nUtilise les commandes suivantes directement dans le chat :\n- \"Liste toutes les pharmacies\"\n- \"Ajoute la pharmacie [Nom] avec contact [numéro] dans [ville]\"\n- \"Modifie la pharmacie [Nom] avec contact [nouveau numéro]\"\n- \"Supprime la pharmacie [Nom]\"\n- \"Recherche la pharmacie [Nom]\"\n\n🎯 TON RÔLE :\n- Réponds aux questions générales\n- Lis les données des pharmacies quand demandé\n- Consulte les documents disponibles\n- Fournis des informations claires et structurées\n\nQuestion de l'utilisateur : {{ $json.body.chatInput }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        360,
+        100
+      ],
+      "id": "e64d04ad-35cf-477e-9ea5-e3718ad72861",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "c1630bc2-7417-411e-9b8a-937ea034bb82",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -440,
+        100
+      ],
+      "id": "31986b24-57a1-4aa6-82f4-7868b389463b",
+      "name": "Webhook",
+      "webhookId": "d5089c66-2fa1-4f71-a2af-92a414afab33"
+    },
+    {
+      "parameters": {
+        "resource": "page",
+        "operation": "__CUSTOM_API_CALL__"
+      },
+      "type": "n8n-nodes-base.googleSlidesTool",
+      "typeVersion": 2,
+      "position": [
+        720,
+        400
+      ],
+      "id": "323ef3c4-3887-443a-885b-efc1d99e49d5",
+      "name": "Add_Slide_Flash_Report",
+      "credentials": {
+        "googleSlidesOAuth2Api": {
+          "id": "3lRWJmQUEjSJYCTc",
+          "name": "Google Slides account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Get slides from a presentation in Google Slides",
+        "operation": "getSlides",
+        "presentationId": "1TBop8ZJSfdsM1EVo32GhmlnB_8066E_81kWJIu1Ln4E"
+      },
+      "type": "n8n-nodes-base.googleSlidesTool",
+      "typeVersion": 2,
+      "position": [
+        940,
+        460
+      ],
+      "id": "f0875777-6045-4491-a77c-eeafb32b28a0",
+      "name": "Mise_a_jour_du_logiciel",
+      "credentials": {
+        "googleSlidesOAuth2Api": {
+          "id": "3lRWJmQUEjSJYCTc",
+          "name": "Google Slides account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Get slides from a presentation in Google Slides",
+        "operation": "getSlides",
+        "presentationId": "1cnJI6bqtMaBCc-1Q20txaoHXRXYxiN5LIepsTw6lLF8"
+      },
+      "type": "n8n-nodes-base.googleSlidesTool",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        480
+      ],
+      "id": "132c635e-6484-4fb9-988f-57d8fb2b4f97",
+      "name": "Procedure_installation_logiciel",
+      "credentials": {
+        "googleSlidesOAuth2Api": {
+          "id": "3lRWJmQUEjSJYCTc",
+          "name": "Google Slides account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "1Ekt2Aiw7sh3T2jICeoZ-URq7vCPEbBmHHvQ10_FCGV4"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        1220,
+        320
+      ],
+      "id": "3febf491-3a95-4bb9-8279-ea4101161569",
+      "name": "Guide d'utilisation de TocToc Medoc",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "4SW39wW0S6z17GEQ",
+          "name": "Google Docs account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "15Ysg0bDm3nsw6g7oXFSXdhPQJcT1psvSzQl-QL5Tihs"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        1400,
+        280
+      ],
+      "id": "55563228-9c80-4e31-a371-ef0bdacd9f8e",
+      "name": "Procedure de sauvegarde automatique",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "4SW39wW0S6z17GEQ",
+          "name": "Google Docs account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Update_Flash_Report": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read_Flash_Report": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read_Pharmacy_Data": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add_Slide_Flash_Report": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mise_a_jour_du_logiciel": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procedure_installation_logiciel": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guide d'utilisation de TocToc Medoc": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procedure de sauvegarde automatique": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "344b9663-4612-44b0-98ae-e53a1478dc98",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "89f1325b19f5b2bb71e8f85edaa9a8e1f156d50a991477d7ed4940c06095672f"
+  },
+  "id": "8LtvDtY1jrkjTMh3",
+  "tags": []
+}

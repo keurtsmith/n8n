@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Gestion Pharmacies</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+        }
+        button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        #output {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .success { color: #4ade80; }
+        .error { color: #f87171; }
+        .info { color: #60a5fa; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 Test - Gestion des Pharmacies</h1>
+
+        <button onclick="addSampleData()">➕ Ajouter données de test</button>
+        <button onclick="listPharmacies()">📋 Lister pharmacies</button>
+        <button onclick="clearData()">🗑️ Effacer tout</button>
+        <button onclick="exportData()">💾 Exporter JSON</button>
+
+        <div id="output"></div>
+    </div>
+
+    <script>
+        const output = document.getElementById('output');
+
+        function log(message, type = 'info') {
+            const span = document.createElement('span');
+            span.className = type;
+            span.textContent = message + '\n';
+            output.appendChild(span);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function addSampleData() {
+            output.innerHTML = '';
+            log('🚀 Ajout de pharmacies de test...', 'info');
+
+            const pharmacies = [
+                {
+                    Nom_Pharmacie: "Pharmacie Centrale",
+                    Nom_du_client: "Jean Dupont",
+                    Contact: "0612345678",
+                    Type_de_client: "Premium",
+                    Pays: "France",
+                    Ville: "Paris",
+                    Quartier: "15ème arrondissement",
+                    Proprietaire: "Jean Dupont",
+                    Version_du_logiciel: "v3.2.1",
+                    Lien_distant: "https://remote.pharmacie-centrale.fr",
+                    Anydesk_principal: "123456789",
+                    Anydesk_secondaire_1: "987654321",
+                    Anydesk_secondaire_2: "456789123",
+                    Sauvegarde: "Quotidienne"
+                },
+                {
+                    Nom_Pharmacie: "Pharmacie du Soleil",
+                    Nom_du_client: "Marie Martin",
+                    Contact: "0623456789",
+                    Type_de_client: "Standard",
+                    Pays: "France",
+                    Ville: "Lyon",
+                    Quartier: "Part-Dieu",
+                    Proprietaire: "Marie Martin",
+                    Version_du_logiciel: "v3.1.5",
+                    Lien_distant: "https://remote.pharmacie-soleil.fr",
+                    Anydesk_principal: "234567890",
+                    Anydesk_secondaire_1: "098765432",
+                    Anydesk_secondaire_2: "567890234",
+                    Sauvegarde: "Hebdomadaire"
+                },
+                {
+                    Nom_Pharmacie: "Pharmacie Saint Martin",
+                    Nom_du_client: "Pierre Durand",
+                    Contact: "0634567890",
+                    Type_de_client: "Premium",
+                    Pays: "France",
+                    Ville: "Marseille",
+                    Quartier: "Vieux-Port",
+                    Proprietaire: "Pierre Durand",
+                    Version_du_logiciel: "v3.2.0",
+                    Lien_distant: "https://remote.pharmacie-stmartin.fr",
+                    Anydesk_principal: "345678901",
+                    Anydesk_secondaire_1: "109876543",
+                    Anydesk_secondaire_2: "678901345",
+                    Sauvegarde: "Quotidienne"
+                },
+                {
+                    Nom_Pharmacie: "Pharmacie des Lilas",
+                    Nom_du_client: "Sophie Bernard",
+                    Contact: "0645678901",
+                    Type_de_client: "Standard",
+                    Pays: "France",
+                    Ville: "Toulouse",
+                    Quartier: "Capitole",
+                    Proprietaire: "Sophie Bernard",
+                    Version_du_logiciel: "v3.1.8",
+                    Lien_distant: "https://remote.pharmacie-lilas.fr",
+                    Anydesk_principal: "456789012",
+                    Anydesk_secondaire_1: "210987654",
+                    Anydesk_secondaire_2: "789012456",
+                    Sauvegarde: "Quotidienne"
+                },
+                {
+                    Nom_Pharmacie: "Pharmacie de la Gare",
+                    Nom_du_client: "Luc Petit",
+                    Contact: "0656789012",
+                    Type_de_client: "Premium",
+                    Pays: "France",
+                    Ville: "Nice",
+                    Quartier: "Gare SNCF",
+                    Proprietaire: "Luc Petit",
+                    Version_du_logiciel: "v3.2.1",
+                    Lien_distant: "https://remote.pharmacie-gare.fr",
+                    Anydesk_principal: "567890123",
+                    Anydesk_secondaire_1: "321098765",
+                    Anydesk_secondaire_2: "890123567",
+                    Sauvegarde: "Hebdomadaire"
+                }
+            ];
+
+            // Ajouter un ID et des timestamps
+            const enrichedPharmacies = pharmacies.map((p, index) => ({
+                ...p,
+                id: (Date.now() + index).toString(),
+                row_number: index + 2,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            }));
+
+            localStorage.setItem('epharma_pharmacies_db', JSON.stringify(enrichedPharmacies));
+
+            log(`✅ ${enrichedPharmacies.length} pharmacies ajoutées avec succès !`, 'success');
+            log('\nPharmacies ajoutées :', 'info');
+            enrichedPharmacies.forEach((p, i) => {
+                log(`${i + 1}. ${p.Nom_Pharmacie} - ${p.Ville} (${p.Contact})`, 'info');
+            });
+        }
+
+        function listPharmacies() {
+            output.innerHTML = '';
+            const data = localStorage.getItem('epharma_pharmacies_db');
+
+            if (!data) {
+                log('❌ Aucune pharmacie dans la base de données', 'error');
+                return;
+            }
+
+            const pharmacies = JSON.parse(data);
+            log(`📋 ${pharmacies.length} pharmacie(s) enregistrée(s) :\n`, 'info');
+
+            pharmacies.forEach((p, index) => {
+                log(`${index + 1}. 🏥 ${p.Nom_Pharmacie}`, 'success');
+                log(`   👤 Client: ${p.Nom_du_client || 'N/A'}`, 'info');
+                log(`   📞 Contact: ${p.Contact || 'N/A'}`, 'info');
+                log(`   🏙️ Ville: ${p.Ville || 'N/A'}`, 'info');
+                log(`   📍 Quartier: ${p.Quartier || 'N/A'}`, 'info');
+                log(`   🏷️ Type: ${p.Type_de_client || 'N/A'}`, 'info');
+                log(`   💻 Version: ${p.Version_du_logiciel || 'N/A'}`, 'info');
+                log(`   💾 Sauvegarde: ${p.Sauvegarde || 'N/A'}`, 'info');
+                log('', 'info');
+            });
+        }
+
+        function clearData() {
+            if (confirm('⚠️ Êtes-vous sûr de vouloir supprimer toutes les pharmacies ?')) {
+                localStorage.removeItem('epharma_pharmacies_db');
+                output.innerHTML = '';
+                log('🗑️ Base de données effacée avec succès !', 'success');
+            }
+        }
+
+        function exportData() {
+            const data = localStorage.getItem('epharma_pharmacies_db');
+
+            if (!data) {
+                output.innerHTML = '';
+                log('❌ Aucune donnée à exporter', 'error');
+                return;
+            }
+
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `pharmacies_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+
+            output.innerHTML = '';
+            log('💾 Données exportées avec succès !', 'success');
+            log(`📁 Fichier: pharmacies_${new Date().toISOString().split('T')[0]}.json`, 'info');
+        }
+
+        // Afficher le statut au chargement
+        window.addEventListener('load', () => {
+            const data = localStorage.getItem('epharma_pharmacies_db');
+            if (data) {
+                const count = JSON.parse(data).length;
+                log(`✅ Base de données chargée : ${count} pharmacie(s)`, 'success');
+            } else {
+                log('📭 Base de données vide. Cliquez sur "Ajouter données de test" pour commencer.', 'info');
+            }
+        });
+    </script>
+</body>
+</html>
