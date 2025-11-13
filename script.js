@@ -28,7 +28,7 @@ function loadConversations() {
 }
 
 // Configuration du webhook n8n
-const N8N_WEBHOOK_URL = "http://localhost:5678/webhook-test/c1630bc2-7417-411e-9b8a-937ea034bb82"
+const N8N_WEBHOOK_URL = "https://n8n-production-1686.up.railway.app/webhook/c1630bc2-7417-411e-9b8a-937ea034bb82"
 
 const KEYWORD_MAPPING = {
   // Ajouter ici vos nouveaux mappings
